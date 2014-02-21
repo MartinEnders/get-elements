@@ -6,7 +6,7 @@ I use it to extract information from s-expressions which are the result of parsi
 
 ## API
 ```cl
-(get-elements-by-tag-name (tree tag-name &key (recursive t) (test #'equal))
+(by-tag-name (tree tag-name &key (recursive t) (test #'equal))
 ```
 * tree: s-expression
 * tag-name: search value (must be the first value of a list in the s-expression)
@@ -14,7 +14,7 @@ I use it to extract information from s-expressions which are the result of parsi
 * test (optional): Testfunction for comparison of tag-name with items in list
 
 ```cl
-(get-elements-by-path (tree path &key (test #'equal) (relative-path t))
+(by-path (tree path &key (test #'equal) (relative-path t))
 ```
 * tree: s-expression
 * path: list with hierarchy to search for
@@ -32,38 +32,38 @@ Developed with SLIME, SBCL and EMACS on Debian GNU/Linux
 
 ## Examples
 
-get-elements-by-tag-name:
+by-tag-name:
 
 ```cl
-GET-ELEMENTS> (get-elements-by-tag-name '(A) 'a)
+GET-ELEMENTS> (by-tag-name '(A) 'a)
 NIL
-GET-ELEMENTS> (get-elements-by-tag-name '((A)) 'a)
+GET-ELEMENTS> (by-tag-name '((A)) 'a)
 ((A))
-GET-ELEMENTS> (get-elements-by-tag-name '( (a) (b) ) 'a)
+GET-ELEMENTS> (by-tag-name '( (a) (b) ) 'a)
 ((A))
-GET-ELEMENTS> (get-elements-by-tag-name '( (a) (b) (a b) ) 'a)
+GET-ELEMENTS> (by-tag-name '( (a) (b) (a b) ) 'a)
 ((A) (A B))
-GET-ELEMENTS> (get-elements-by-tag-name '( (a) (b) (a b) (a a (b (a 'hello))) ) 'a)
+GET-ELEMENTS> (by-tag-name '( (a) (b) (a b) (a a (b (a 'hello))) ) 'a)
 ((A) (A B) (A A (B (A 'HELLO))) (A 'HELLO))
 ```
 
-get-elements-by-path
+by-path
 
 ```cl
-GET-ELEMENTS> (get-elements-by-path '(a) '(a))
+GET-ELEMENTS> (by-path '(a) '(a))
 NIL
-GET-ELEMENTS> (get-elements-by-path '((a)) '(a))
+GET-ELEMENTS> (by-path '((a)) '(a))
 ((A))
-GET-ELEMENTS> (get-elements-by-path '( (a) (b) ) '(a))
+GET-ELEMENTS> (by-path '( (a) (b) ) '(a))
 ((A))
-GET-ELEMENTS> (get-elements-by-path '( (a (b c) ) (b) ) '(a))
+GET-ELEMENTS> (by-path '( (a (b c) ) (b) ) '(a))
 ((A (B C)))
-GET-ELEMENTS> (get-elements-by-path '( (a (b c) ) (b) ) '(a b))
+GET-ELEMENTS> (by-path '( (a (b c) ) (b) ) '(a b))
 ((B C))
-GET-ELEMENTS> (get-elements-by-path '( (a (b c) ) (b (a (b 'hello))) ) '(a b))
+GET-ELEMENTS> (by-path '( (a (b c) ) (b (a (b 'hello))) ) '(a b))
 ((B C) (B 'HELLO))
-GET-ELEMENTS> (get-elements-by-path '( (a (b c) ) (b (a (b 'hello))) ) '(a b) :relative-path nil)
+GET-ELEMENTS> (by-path '( (a (b c) ) (b (a (b 'hello))) ) '(a b) :relative-path nil)
 ((B C))
-GET-ELEMENTS> (get-elements-by-path '( (a (b c) ) (b (a (b 'hello))) ) '(b a b) :relative-path nil)
+GET-ELEMENTS> (by-path '( (a (b c) ) (b (a (b 'hello))) ) '(b a b) :relative-path nil)
 ((B 'HELLO))
 ```
