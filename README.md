@@ -67,3 +67,6 @@ GET-ELEMENTS> (by-path '( (a (b c) ) (b (a (b 'hello))) ) '(a b) :relative-path 
 GET-ELEMENTS> (by-path '( (a (b c) ) (b (a (b 'hello))) ) '(b a b) :relative-path nil)
 ((B 'HELLO))
 ```
+
+## See Also:
+http://shinmera.github.io/CLSS/
